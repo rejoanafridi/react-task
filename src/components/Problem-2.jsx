@@ -28,6 +28,7 @@ const Problem2 = () => {
 
   const handleClose = () => setShowModal(false);
 
+  // search contact handler
   useEffect(() => {
     const searchContact = async () => {
       const result = await axios.get(
@@ -41,7 +42,7 @@ const Problem2 = () => {
 
   const fetchContactData = async () => {
     const result = await axios.get(
-      'https://contact.mediusware.com/api/contacts',
+      'https://contact.mediusware.com/api/contacts/',
     );
 
     setContacts(result.data.results);
@@ -77,17 +78,17 @@ const Problem2 = () => {
           <button
             value='A'
             onClick={(e) => handleShow(e)}
-            className='btn btn-lg btn-outline-primary color[#46139f]'
+            className='btn btn-lg btn-outline-primary text-white'
             type='button'
-            style={{ color: '#46139f' }}>
+            style={{ backgroundColor: '#46139f' }}>
             All Contacts
           </button>
           <button
             value='B'
             onClick={(e) => handleShow(e)}
-            className='btn btn-lg btn-outline-warning'
+            className='btn btn-lg btn-outline-warning text-white'
             type='button'
-            style={{ color: '#ff7f50' }}>
+            style={{ backgroundColor: '#ff7f50' }}>
             US Contacts
           </button>
         </div>
@@ -104,7 +105,7 @@ const Problem2 = () => {
                     type='search'
                     id='form1'
                     placeholder='Search'
-                    className='form-control w-full'
+                    className='form-control'
                     onChange={(e) => setSearchText(e.target.value)}
                   />
                 </div>
@@ -114,17 +115,17 @@ const Problem2 = () => {
               <button
                 value='A'
                 onClick={(e) => handleShow(e)}
-                className='btn btn-lg btn-outline-primary'
-                style={{ color: '#46139f' }}
-                type='button'>
+                className='btn btn-lg btn-outline-primary text-white'
+                type='button'
+                style={{ backgroundColor: '#46139f' }}>
                 All Contacts
               </button>
               <button
                 value='B'
                 onClick={(e) => handleShow(e)}
-                className='btn btn-lg btn-outline-warning'
-                style={{ color: '#ff7f50' }}
-                type='button'>
+                className='btn btn-lg btn-outline-warning text-white'
+                type='button'
+                style={{ backgroundColor: '#ff7f50' }}>
                 US Contacts
               </button>
               <button
@@ -138,29 +139,20 @@ const Problem2 = () => {
               </button>
             </div>
 
-            {/* <div>
-              <label>
-                <input
-                  type='checkbox'
-                  checked={onlyEven}
-                  onChange={() => setOnlyEven(!onlyEven)}
-                />
-                Only Even
-              </label>
-            </div> */}
-
-            <div className='w-full flex items-center justify-center'>
-              <div>
-                {contacts?.map((contact, idx) => (
-                  <React.Fragment key={idx}>
-                    <h3
-                      onClick={() => handleContactItemClick(contact)}
-                      className='cursor-pointer text-reset'>
-                      {contact.phone}
-                    </h3>
-                  </React.Fragment>
-                ))}
-              </div>
+            <div>
+              {contacts?.map((contact) => (
+                <React.Fragment key={contact.id}>
+                  <div className='d-flex justify-content-between my-2'>
+                    <p>{contact.phone}</p>
+                    <button
+                      className='btn btn-sm bg-success btn-outline-secondary text-white'
+                      type='button'
+                      onClick={() => handleContactItemClick(contact)}>
+                      View Details
+                    </button>
+                  </div>
+                </React.Fragment>
+              ))}
             </div>
           </Modal.Body>
 
@@ -172,11 +164,10 @@ const Problem2 = () => {
                 backgroundColor: '#ffff',
                 border: '2px solid #46139f',
               }}>
-              Next Page
+              next page
             </button>
           </Modal.Footer>
         </Modal>
-
         <Modal show={showModalC} onHide={() => setShowModalC(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Contact Details</Modal.Title>
@@ -192,7 +183,7 @@ const Problem2 = () => {
           </Modal.Body>
           <Modal.Footer>
             <button
-              className='btn btn-lg btn-outline-primary bg-warning text-white'
+              className='btn btn-lg btn-outline-primary text-white'
               onClick={() => setShowModalC(false)}>
               Close
             </button>
