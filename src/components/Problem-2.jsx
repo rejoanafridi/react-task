@@ -10,7 +10,10 @@ const Problem2 = () => {
   const [searchText, setSearchText] = useState('');
   const [showModalC, setShowModalC] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
+  const [evenCheck, setEvenCheck] = useState(false);
 
+  console.log(evenCheck);
+  console.log(contacts);
   const handleShow = (e) => {
     setShowModal(true);
     setModalState(e.target.value);
@@ -68,6 +71,10 @@ const Problem2 = () => {
   const handleContactItemClick = (contact) => {
     setSelectedContact(contact);
     setShowModalC(true);
+  };
+
+  const handleEvenOnly = () => {
+    setEvenCheck(!evenCheck);
   };
 
   return (
@@ -140,23 +147,28 @@ const Problem2 = () => {
             </div>
 
             <div>
-              {contacts?.map((contact) => (
-                <React.Fragment key={contact.id}>
-                  <div className='d-flex justify-content-between my-2'>
-                    <p>{contact.phone}</p>
-                    <button
-                      className='btn btn-sm bg-success btn-outline-secondary text-white'
-                      type='button'
-                      onClick={() => handleContactItemClick(contact)}>
-                      View Details
-                    </button>
-                  </div>
-                </React.Fragment>
-              ))}
+              {contacts
+                ?.filter((contact) => (evenCheck ? contact.id % 2 === 0 : true))
+                .map((contact) => (
+                  <React.Fragment key={contact.id}>
+                    <div className='d-flex justify-content-between my-2'>
+                      <p>{contact.phone}</p>
+                      <button
+                        className='btn btn-sm bg-success btn-outline-secondary text-white'
+                        type='button'
+                        onClick={() => handleContactItemClick(contact)}>
+                        View Details
+                      </button>
+                    </div>
+                  </React.Fragment>
+                ))}
             </div>
           </Modal.Body>
 
           <Modal.Footer>
+            <div className=''>
+              <input type='checkbox' onClick={handleEvenOnly} /> only even
+            </div>
             <button
               className='btn btn-lg  text-primary'
               onClick={handleNextPage}
